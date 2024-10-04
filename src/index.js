@@ -6,6 +6,19 @@ dotenv.config({
 })
 
 connectDB()
+.then(()=>{
+    app.on((err)=>{
+        console.log("Error in connecting express:",err)
+    })
+    app.listen(process.env.PORT || 8000, ()=>{
+        console.log(`server is running at port: ${process.env.PORT}`)
+    })
+})
+.catch((err)=>{
+    console.log("Mongo DB Error:", err)
+})
+
+
 // Another Approach //
 /*
 import mongoose from "mongoose";
@@ -13,9 +26,9 @@ import { DB_NAME } from "./constants";
 import express from "express";
 const app = express()
 
-(async()=>{
+(async()=>{    // IIFE used (Immediately Invoked Function Expression)  is a function that is defined and executed immediately.
     try {
-        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)  // we use async await as it takes time to responed from DB.
         app.on("error", (error)=>{
             console.log("Error :",error);
             throw error
