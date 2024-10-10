@@ -1,10 +1,10 @@
-const asyncHandler =(requestHandler) =>{
-    (req,res,next) => {
-        Promise.resolve().catch
-    }
-}
+const asyncHandler = (requestHandler) => {
+  return (req, res, next) => {
+    Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err));
+  };
+};
 
-export {asyncHandler}
+export { asyncHandler };
 
 //########### High Order Func ##############
 
@@ -12,7 +12,7 @@ export {asyncHandler}
 // const asyncHandler = (func) => () => {}
 // const asyncHandler =(func) => async() => {}
 
-//############# Another approach #########    
+//############# Another approach #########
 
 // const asyncHandler = (fn) => async (req,res,next) => {
 //     try {
@@ -23,4 +23,4 @@ export {asyncHandler}
 //             message: err.message
 //         })
 //     }
-// }    
+// }
