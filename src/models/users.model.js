@@ -58,13 +58,16 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// userSchema.methods.isPasswordCorrect = async function (password) {
+//   //.methods is used for making custom methods
+//   return await bcrypt.compare(password, this.password); //this.password is the encrypted one
+// };
 userSchema.methods.isPasswordCorrect = async function (password) {
-  //.methods is used for making custom methods
-  return await bcrypt.compare(password, this.password); //this.password is the encrypted one
+  return await bcrypt.compare(password, this.password);
 };
 
 userSchema.methods.generateAccessToken = function () {
-  jwt.sign(
+  return jwt.sign(
     {
       _id: this.id,
       email: this.email,
@@ -79,7 +82,7 @@ userSchema.methods.generateAccessToken = function () {
 };
 
 userSchema.methods.generateRefreshToken = function () {
-  jwt.sign(
+  return jwt.sign(
     {
       _id: this.id,
     },
